@@ -27,9 +27,15 @@ def mode(X):
         else:
             d[item] = 1
 
+    """ commented by zuhairi on 18/3/2014
     m = (0, 0)
     for key in d.keys():
         if d[key] > m[1]:
             m = (key, d[key])
+"""
+    m = []
+    for key in d.keys():
+        if d.get(key) > 1:
+            m.append(key)
+    return m
 
-    return [m[0]]
