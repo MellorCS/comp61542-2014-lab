@@ -34,8 +34,17 @@ def mode(X):
             m = (key, d[key])
 """
     m = []
+    frequency = None
+
     for key in d.keys():
-        if d.get(key) > 1:
+        if frequency == None:
+            frequency = d[key]
             m.append(key)
+        elif frequency < d[key]:
+             m = []
+             frequency = d[key]
+             m.append(key)
+        elif frequency == d[key]:
+             m.append(key)
     return m
 
