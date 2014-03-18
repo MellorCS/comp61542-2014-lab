@@ -24,3 +24,5 @@ if "TESTING" in os.environ:
     app.config['TESTING'] = True
 
 app.run(host='0.0.0.0', port=9292)
+
+print "something"
