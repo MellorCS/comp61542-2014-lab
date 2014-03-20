@@ -4,7 +4,7 @@ __author__ = 'zoe'
 
 
 
-def author_appear_last(self):
+def author_appears_last(self):
 
 
     return 1;
