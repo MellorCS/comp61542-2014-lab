@@ -63,6 +63,8 @@ class Database:
     def get_all_authors(self):
         return self.author_idx.keys()
 
+
+
     def get_coauthor_data(self, start_year, end_year, pub_type):
         coauthors = {}
         for p in self.publications:
@@ -190,6 +192,9 @@ class Database:
             ["Number of authors"] + [ len(a) for a in alist ] + [len(ua)] ]
         return (header, data)
 
+
+
+
     def get_average_authors_per_publication_by_author(self, av):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
@@ -222,6 +227,32 @@ class Database:
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header, data)
+
+
+    def get_authors_who_appear_first(self):
+        header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
+        astats = [[0,0,0,0] for _ in range(len(self.authors))]
+
+
+        for p in self.publications:
+            astats[p.authors[0]][p.pub_type] +=1
+
+        data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
+            for i in range(len(astats)) ]
+
+        return (header,data)
+
+
+    def get_authors_who_appear_last(self):
+        header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
+        astats = [[0,0,0,0] for _ in range(len(self.authors))]
+
+        for p in self.publications:
+            astats[p.authors[len(p.authors)-1]][p.pub_type] +=1
+
+        data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
+            for i in range(len(astats)) ]
+        return (header,data)
 
     def get_average_authors_per_publication_by_year(self, av):
         header = ("Year", "Conference papers",
@@ -421,3 +452,4 @@ class DocumentHandler(handler.ContentHandler):
     def characters(self, chrs):
         if self.pub_type != None:
             self.chrs += chrs
+

@@ -2,7 +2,7 @@ from comp61542 import app
 from comp61542.database import (database, mock_database)
 import sys
 import os
-
+from comp61542 import statistics
 if len(sys.argv) == 1:
     dataset = "Mock"
     db = mock_database.MockDatabase()
@@ -22,8 +22,7 @@ if "DEBUG" in os.environ:
 
 if "TESTING" in os.environ:
     app.config['TESTING'] = True
-
+header, data = db.get_authors_who_appear_first()
+print data
 app.run(host='0.0.0.0', port=9292)
 
-print "something"
-print "commit test panos"

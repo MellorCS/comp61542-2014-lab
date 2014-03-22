@@ -115,5 +115,10 @@ def showPublicationSummary(status):
     if (status == "author_year"):
         args["title"] = "Author by Year"
         args["data"] = db.get_author_totals_by_year()
-
+    if (status == "first_author"):
+        args["title"] = "Authors that appear first by publication type"
+        args["data"] = db.get_authors_who_appear_first()
+    if (status == "last_author"):
+        args["title"] = "Authors that appear last by publication type"
+        args["data"] = db.get_authors_who_appear_last()
     return render_template('statistics_details.html', args=args)
