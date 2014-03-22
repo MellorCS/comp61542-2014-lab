@@ -160,5 +160,6 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(data[0][1], 2,
             "incorrect number of authors in result")
 
+
 if __name__ == '__main__':
     unittest.main()
