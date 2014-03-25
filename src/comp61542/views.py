@@ -106,7 +106,8 @@ def showPublicationSummary(status):
 
     if (status == "publication_author"):
         args["title"] = "Author Publication"
-        args["data"] = db.get_publications_by_author()
+        args["data"] = db.get_publications_and_first_last()
+        #args["data"] = db.get_publications_by_author()
 
     if (status == "publication_year"):
         args["title"] = "Publication by Year"

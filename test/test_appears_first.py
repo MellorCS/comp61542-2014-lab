@@ -16,7 +16,7 @@ class AppearsFirst(unittest.TestCase):
         db = database.Database()
         self.assertTrue(db.read(path.join(self.data_dir, "publications_small_sample.xml")))
         header, data = db.get_authors_who_appear_first()
-        print data
+
         self.assertEqual(len(header), len(data[0]),
             "header and data column size doesn't match")
         self.assertEqual(len(data), 14,

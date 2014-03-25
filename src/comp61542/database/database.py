@@ -217,7 +217,7 @@ class Database:
     def get_publications_by_author(self):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
-            "Number of book chapers", "Total")
+            "Number of book chapters", "Total")
 
         astats = [ [0, 0, 0, 0] for _ in range(len(self.authors)) ]
         for p in self.publications:
@@ -227,6 +227,43 @@ class Database:
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header, data)
+
+
+    def get_publications_and_first_last(self):
+        header = ("Author","Number of conference papers",
+                  "Number of journals","Number of books","Number of book chapters","First","Last",
+                  "Co-authors","Total")
+        #count publications
+        astats = [[0,0,0,0,0,0,0] for _ in range(len(self.authors))]
+        for p in self.publications:
+            for a in p.authors:
+                astats[a][p.pub_type]+=1
+        #count first and last publications
+        for p in self.publications:
+            astats[p.authors[0]][4] +=1
+            astats[p.authors[-1]][5] +=1
+
+        #count co-authors
+        coauthors = {}
+        for p in self.publications:
+            for a in p.authors:
+                    for a2 in p.authors:
+                        if a != a2:
+                            try:
+                                coauthors[a].add(a2)
+                            except KeyError:
+                                coauthors[a] = set([a2])
+                    astats[a][6] = len(coauthors[a])
+
+
+
+        data = [ [self.authors[i].name] + astats[i] + [0]
+            for i in range(len(astats)) ]
+        #sum up the total publications
+        for d in data:
+            d[-1] = sum(d[1:4])
+
+        return (header,data)
 
 
     def get_authors_who_appear_first(self):
