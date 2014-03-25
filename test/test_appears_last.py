@@ -22,14 +22,14 @@ class TestAppearsLast(unittest.TestCase):
         self.assertEqual(len(data), 14,
             "incorrect number of authors")
         self.assertEqual(data[1][1],1,
-            "incorrect number of times appeared first in conference papers")
+            "incorrect number of times appeared last in conference papers")
         self.assertEqual(data[1][2],0,
-            "incorrect number of times appeared first in journals")
+            "incorrect number of times appeared last in journals")
         self.assertEqual(data[1][3],0,
-            "incorrect number of times appeared first in books")
+            "incorrect number of times appeared last in books")
         self.assertEqual(data[1][4],0,
-            "incorrect number of times appeared first in book chapters")
+            "incorrect number of times appeared last in book chapters")
         self.assertEqual(data[1][5],1,
-            "incorrect number of times appeared first in total")
+            "incorrect number of times appeared last in total")
 if __name__ == '__main__':
     unittest.main()
