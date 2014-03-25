@@ -261,7 +261,7 @@ class Database:
             for i in range(len(astats)) ]
         #sum up the total publications
         for d in data:
-            d[-1] = sum(d[1:4])
+            d[-1] = sum(d[1:5])
 
         return (header,data)
 
