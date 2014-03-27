@@ -162,7 +162,7 @@ def showSearch():
     print type(data)
 
     if (isinstance(data, basestring)):
-         showAuthorStatistics(data)
+        return showAuthorStatistics(data)
     elif(len(data)>1):
         data.sort()
         tables.append({
@@ -170,11 +170,13 @@ def showSearch():
         "title": "Data",
         "header":"Author",
         "rows": data })
-    else:
-        showAuthorStatistics(data)
 
-    args['tables'] = tables
-    return render_template("search.html", args=args)
+        args['tables'] = tables
+        return render_template("search.html", args=args)
+    else:
+        return showAuthorStatistics(data)
+
+
 
 @app.route("/authorStatistics/<authorname>")
 def showAuthorStatistics(authorname):
