@@ -96,6 +96,8 @@ class Database:
             for i in range(len(astats)) ]
         return (header,data)
 
+
+
     def get_coauthor_data(self, start_year, end_year, pub_type):
         coauthors = {}
         for p in self.publications:
@@ -303,7 +305,8 @@ class Database:
 
 
         for p in self.publications:
-            astats[p.authors[0]][p.pub_type] +=1
+            if(len(p.authors)!=1):
+                astats[p.authors[0]][p.pub_type] +=1
 
         data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
@@ -316,7 +319,8 @@ class Database:
         astats = [[0,0,0,0] for _ in range(len(self.authors))]
 
         for p in self.publications:
-            astats[p.authors[len(p.authors)-1]][p.pub_type] +=1
+            if(len(p.authors)!=1):
+                astats[p.authors[len(p.authors)-1]][p.pub_type] +=1
 
         data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
@@ -461,7 +465,7 @@ class Database:
                     links.add((a, a2))
         return (nodes, links)
 
-    def get_author_statistic(self,author_name):
+    def get_author_statistics(self,author_name):
         author_dict = {}
         #author_stats = ()
         publications = self.get_publications_by_author()
@@ -479,7 +483,7 @@ class Database:
             if author_name == al[0]:
                 author_dict["appear_last"] = appear_last.__getitem__(0),al
 
-        appear_solo = self.get_authors_who_appear_solo()
+        appear_solo = self.get_authors_who_appear_sole()
         for solo in appear_solo.__getitem__(1):
             if author_name == solo[0]:
                 author_dict["appear_solo"] = appear_solo.__getitem__(0),solo
@@ -492,7 +496,7 @@ class Database:
         #print coauthor
         return
 
-    def get_authors_who_appear_solo(self):
+    def get_authors_who_appear_sole(self):
         header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
         astats = [[0,0,0,0] for _ in range(len(self.authors))]
 
@@ -546,7 +550,18 @@ class DocumentHandler(handler.ContentHandler):
             return
         d = self.chrs.strip()
         if self.tag == "author":
-            self.authors.append(d)
+
+            str=d.split()
+            temp=[]
+            temp.append(str[-1])
+
+            for item in str:
+                if(item!=str[-1]):
+                    temp.append(item)
+
+            z=' '.join(temp)
+
+            self.authors.append(z)
         elif self.tag == "title":
             self.title = d
         elif self.tag == "year":
