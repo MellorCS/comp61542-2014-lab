@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}{{ args.title }}{% endblock %}
+{% block content %}
+<h1>{{ args.title }}</h1>
+<h1> </h1>
+<form name="input" action="/search" method="get" data-ajax="false" onSubmit="validateForm(this)">
+Name of Author: <input type="" name="author_name"  value="{{ args.author_name }}">
+<input type="submit" value="Submit">
+</form>
+
+
+<h1> </h1>
+{% for table in args.tables %}
+<table>
+  <thead>
+    <tr>
+        <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in table.rows %}    
+      <tr>
+
+          <td><a href="/authorStatistics/{{row}}">{{ row }}</a></td>
+
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<br/>
+{% endfor %}
+{% endblock %}

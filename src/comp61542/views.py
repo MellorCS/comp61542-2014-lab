@@ -139,3 +139,74 @@ def showPublicationSummary(status):
         args["title"] = "Authors that appear last by publication type"
         args["data"] = db.get_authors_who_appear_last()
     return render_template('statistics_details.html', args=args)
+
+@app.route("/search")
+def showSearch():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset}
+    args['title'] = "Author's Statistics"
+    tables = []
+
+    author_name=""
+
+
+    if("author_name" in request.args):
+        author_name=request.args.get("author_name")
+
+
+    data=db.get_results_of_search_author(author_name)
+
+    if(data!=1):
+        tables.append({
+        "id":1,
+
+        "header":"Author",
+        "rows": data })
+    else:
+        showAuthorStatistics(data)
+
+    args['tables'] = tables
+    return render_template("search.html", args=args)
+
+@app.route("/authorStatistics/<authorname>")
+def showAuthorStatistics(authorname):
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset, "id":"authorname"}
+    args['title'] = "Statistics of " + authorname
+    tables = []
+    headers=["Overall","Journal	Articles","Conference Papers", "Books","Book Chapters"]
+
+
+    data=db.get_results_of_search_author(authorname)
+
+
+    tables.append({
+        "id":1,
+        "title":"Number	of publications",
+        "header":headers,
+        "rows": data})
+    tables.append({
+        "id":2,
+        "title":"Number	of times first author",
+        "header":headers,
+        "rows":data })
+    tables.append({
+        "id":3,
+        "title":"Number	of times last author",
+        "header":headers,
+        "rows": data})
+    tables.append({
+        "id":4,
+        "title":"Number	of times sole author",
+        "header":headers,
+        "rows":data })
+    tables.append({
+        "id":5,
+        "title":"Number of co-authors",
+        "header":[""],
+        "rows":data })
+
+    args['tables'] = tables
+    return render_template("search.html", args=args)

@@ -63,7 +63,21 @@ class Database:
     def get_all_authors(self):
         return self.author_idx.keys()
 
+    def get_results_of_search_author(self, author_name):
 
+        authors=[]
+        for key in self.author_idx.keys():
+            if author_name.lower() in key.lower():
+                authors.append(key)
+
+        if len(authors)==0:
+            return []
+
+
+        if len(authors)==1:
+            return authors[0]
+
+        return(authors)
 
     def get_coauthor_data(self, start_year, end_year, pub_type):
         coauthors = {}
