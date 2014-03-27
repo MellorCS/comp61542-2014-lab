@@ -9,9 +9,12 @@ Name of Author: <input type="" name="author_name"  value="{{ args.author_name }}
 </form>
 
 
-<h1> </h1>
+
 {% for table in args.tables %}
-<table>
+<h1> </h1>
+<h3>{{ table.title }}</h3>
+<h2></h2>
+<table >
   <thead>
     <tr>
         <th></th>

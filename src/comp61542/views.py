@@ -156,11 +156,12 @@ def showSearch():
 
 
     data=db.get_results_of_search_author(author_name)
+    data.sort()
 
     if(data!=1):
         tables.append({
         "id":1,
-
+        "title": "Data",
         "header":"Author",
         "rows": data })
     else:
