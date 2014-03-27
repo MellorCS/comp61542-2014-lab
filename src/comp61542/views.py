@@ -186,27 +186,27 @@ def showAuthorStatistics(authorname):
         "id":1,
         "title":"Number	of publications",
         "header":headers,
-        "rows": data})
+        "rows": data[0:4]})
     tables.append({
         "id":2,
         "title":"Number	of times first author",
         "header":headers,
-        "rows":data })
+        "rows":data[5:9] })
     tables.append({
         "id":3,
         "title":"Number	of times last author",
         "header":headers,
-        "rows": data})
+        "rows": data[10:14]})
     tables.append({
         "id":4,
         "title":"Number	of times sole author",
         "header":headers,
-        "rows":data })
+        "rows":data[15:19] })
     tables.append({
         "id":5,
         "title":"Number of co-authors",
         "header":[""],
-        "rows":data })
+        "rows":data[20:25] })
 
     args['tables'] = tables
     return render_template("search.html", args=args)
