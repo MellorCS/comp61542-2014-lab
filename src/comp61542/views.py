@@ -95,12 +95,13 @@ def show_first_last_sole_pub_type():
     PUB_TYPES = ["Conference Papers", "Journals", "Books", "Book Chapters", "All Publications"]
     args = {"dataset":dataset, "id":"first_last_sole"}
     args["title"] = "First, Last and sole authors"
-    pub_type = 2
+    pub_type=0
     if "pub_type" in request.args:
         pub_type = int(request.args.get("pub_type"))
 
     args["data"] = db.get_first_last_sole(pub_type)
     args["pub_str"] = PUB_TYPES[pub_type]
+    args["pub_type"] = pub_type
 
     return render_template("first_last_sole.html", args=args)
 
@@ -161,7 +162,7 @@ def showSearch():
     print type(data)
 
     if (isinstance(data, basestring)):
-         showAuthorStatistics(data)
+        return showAuthorStatistics(data)
     elif(len(data)>1):
         data.sort()
         tables.append({
@@ -169,11 +170,13 @@ def showSearch():
         "title": "Data",
         "header":"Author",
         "rows": data })
-    else:
-        showAuthorStatistics(data)
 
-    args['tables'] = tables
-    return render_template("search.html", args=args)
+        args['tables'] = tables
+        return render_template("search.html", args=args)
+    else:
+        return showAuthorStatistics(data)
+
+
 
 @app.route("/authorStatistics/<authorname>")
 def showAuthorStatistics(authorname):
