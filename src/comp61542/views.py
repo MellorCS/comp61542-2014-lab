@@ -95,11 +95,11 @@ def show_first_last_sole_pub_type():
     PUB_TYPES = ["Conference Papers", "Journals", "Books", "Book Chapters", "All Publications"]
     args = {"dataset":dataset, "id":"first_last_sole"}
     args["title"] = "First, Last and sole authors"
-    pub_type = 4
+    pub_type = 2
     if "pub_type" in request.args:
         pub_type = int(request.args.get("pub_type"))
 
-    args["data"] = db.get_authors_who_appear_first()
+    args["data"] = db.get_first_last_sole(pub_type)
     args["pub_str"] = PUB_TYPES[pub_type]
 
     return render_template("first_last_sole.html", args=args)

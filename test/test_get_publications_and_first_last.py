@@ -3,7 +3,6 @@ import unittest
 from os import path
 
 from comp61542.database import database
-__author__ = 'zoe'
 
 class AppearsFirst(unittest.TestCase):
 

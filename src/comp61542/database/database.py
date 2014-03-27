@@ -79,6 +79,23 @@ class Database:
 
         return(authors)
 
+    def get_first_last_sole(self,pub_type):
+        header = ("Author","First Author","Last Author","Sole Author")
+        astats = [[0,0,0] for _ in range(len(self.authors))]
+
+        for p in self.publications:
+            if(p.pub_type==pub_type or pub_type==4):
+                #count sole authors and add them to the array
+                if(len(p.authors)==1):
+                    astats[p.authors[0]][2]+=1
+                else:
+                    astats[p.authors[0]][0]+=1
+                    astats[p.authors[-1]][1]+=1
+
+        data = [[self.authors[i].name] + astats[i]
+            for i in range(len(astats)) ]
+        return (header,data)
+
     def get_coauthor_data(self, start_year, end_year, pub_type):
         coauthors = {}
         for p in self.publications:
