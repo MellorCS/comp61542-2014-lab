@@ -88,6 +88,22 @@ def showCoAuthors():
     args["pub_str"] = PUB_TYPES[pub_type]
     return render_template("coauthors.html", args=args)
 
+@app.route("/first_last_sole")
+def show_first_last_sole_pub_type():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    PUB_TYPES = ["Conference Papers", "Journals", "Books", "Book Chapters", "All Publications"]
+    args = {"dataset":dataset, "id":"first_last_sole"}
+    args["title"] = "First, Last and sole authors"
+    pub_type = 4
+    if "pub_type" in request.args:
+        pub_type = int(request.args.get("pub_type"))
+
+    args["data"] = db.get_authors_who_appear_first()
+    args["pub_str"] = PUB_TYPES[pub_type]
+
+    return render_template("first_last_sole.html", args=args)
+
 @app.route("/")
 def showStatisticsMenu():
     dataset = app.config['DATASET']
