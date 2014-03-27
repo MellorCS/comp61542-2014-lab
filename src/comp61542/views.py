@@ -157,8 +157,12 @@ def showSearch():
 
     data=db.get_results_of_search_author(author_name)
 
+    print len(data)
+    print type(data)
 
-    if(data>1):
+    if (isinstance(data, basestring)):
+         showAuthorStatistics(data)
+    elif(len(data)>1):
         data.sort()
         tables.append({
         "id":1,
