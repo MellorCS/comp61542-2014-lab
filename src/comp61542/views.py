@@ -151,15 +151,10 @@ def showSearch():
 
     author_name=""
 
-
     if("author_name" in request.args):
         author_name=request.args.get("author_name")
 
-
     data=db.get_results_of_search_author(author_name)
-
-    print len(data)
-    print type(data)
 
     if (isinstance(data, basestring)):
         return showAuthorStatistics(data)
@@ -185,37 +180,41 @@ def showAuthorStatistics(authorname):
     args = {"dataset":dataset, "id":"authorname"}
     args['title'] = "Statistics of " + authorname
     tables = []
-    headers=["Overall","Journal	Articles","Conference Papers", "Books","Book Chapters"]
+    headers=['Conference Paper', 'Journal', 'Book', 'Book Chapter', 'Overall']
 
+    data=db.get_author_statistics(authorname)
 
-    data=db.get_results_of_search_author(authorname)
-
+    table1=data.get("publications")
+    table2=data.get("appear_first")
+    table3=data.get("appear_last")
+    table4=data.get("appear_solo")
+    table5=[data.get("coauthor")]
 
     tables.append({
         "id":1,
         "title":"Number	of publications",
         "header":headers,
-        "rows": data[0:4]})
+        "rows": table1[1:len(table1)]})
     tables.append({
         "id":2,
         "title":"Number	of times first author",
         "header":headers,
-        "rows":data[5:9] })
+        "rows":table2[1:len(table2)]})
     tables.append({
         "id":3,
         "title":"Number	of times last author",
         "header":headers,
-        "rows": data[10:14]})
+        "rows": table3[1:len(table3)]})
     tables.append({
         "id":4,
         "title":"Number	of times sole author",
         "header":headers,
-        "rows":data[15:19] })
+        "rows": table4[1:len(table4)]})
     tables.append({
         "id":5,
         "title":"Number of co-authors",
-        "header":[""],
-        "rows":data[20:25] })
+        "header":" ",
+        "rows": table5})
 
     args['tables'] = tables
-    return render_template("search.html", args=args)
+    return render_template("author_statistics.html", args=args)

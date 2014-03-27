@@ -14,13 +14,13 @@
     </tr>
   </thead>
   <tbody>
-    {% for row in table.rows %}    
+
       <tr>
-        {% for data_item in row %}
-          <td>{{ data_item }}</td>
+        {% for row in table.rows %}
+          <td>{{ row }}</td>
         {% endfor %}
       </tr>
-    {% endfor %}
+
   </tbody>
 </table>
 <br/>

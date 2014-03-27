@@ -471,30 +471,28 @@ class Database:
         publications = self.get_publications_by_author()
         for ap in publications.__getitem__(1):
             if author_name == ap[0]:
-                author_dict["publications"] = publications.__getitem__(0),ap
+                author_dict["publications"] = ap
 
         appear_first = self.get_authors_who_appear_first()
         for af in appear_first.__getitem__(1):
             if author_name == af[0]:
-                author_dict["appear_first"] = appear_first.__getitem__(0),af
+                author_dict["appear_first"] = af
 
         appear_last = self.get_authors_who_appear_last()
         for al in appear_last.__getitem__(1):
             if author_name == al[0]:
-                author_dict["appear_last"] = appear_last.__getitem__(0),al
+                author_dict["appear_last"] = al
 
         appear_solo = self.get_authors_who_appear_sole()
         for solo in appear_solo.__getitem__(1):
             if author_name == solo[0]:
-                author_dict["appear_solo"] = appear_solo.__getitem__(0),solo
+                author_dict["appear_solo"] = solo
 
         coauthor = self.get_publications_and_first_last()
         for c in coauthor.__getitem__(1):
             if author_name == c[0]:
                 author_dict["coauthor"] = c[7]
-        print(author_dict)
-        #print coauthor
-        return
+        return author_dict
 
     def get_authors_who_appear_sole(self):
         header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
