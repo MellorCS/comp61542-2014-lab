@@ -461,6 +461,50 @@ class Database:
                     links.add((a, a2))
         return (nodes, links)
 
+    def get_author_statistic(self,author_name):
+        author_dict = {}
+        #author_stats = ()
+        publications = self.get_publications_by_author()
+        for ap in publications.__getitem__(1):
+            if author_name == ap[0]:
+                author_dict["publications"] = publications.__getitem__(0),ap
+
+        appear_first = self.get_authors_who_appear_first()
+        for af in appear_first.__getitem__(1):
+            if author_name == af[0]:
+                author_dict["appear_first"] = appear_first.__getitem__(0),af
+
+        appear_last = self.get_authors_who_appear_last()
+        for al in appear_last.__getitem__(1):
+            if author_name == al[0]:
+                author_dict["appear_last"] = appear_last.__getitem__(0),al
+
+        appear_solo = self.get_authors_who_appear_solo()
+        for solo in appear_solo.__getitem__(1):
+            if author_name == solo[0]:
+                author_dict["appear_solo"] = appear_solo.__getitem__(0),solo
+
+        coauthor = self.get_publications_and_first_last()
+        for c in coauthor.__getitem__(1):
+            if author_name == c[0]:
+                author_dict["coauthor"] = c[7]
+        print(author_dict)
+        #print coauthor
+        return
+
+    def get_authors_who_appear_solo(self):
+        header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
+        astats = [[0,0,0,0] for _ in range(len(self.authors))]
+
+        for p in self.publications:
+            if(len(p.authors)==1):
+                    astats[p.authors[0]][p.pub_type] +=1
+
+        data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
+            for i in range(len(astats)) ]
+        return (header,data)
+
+
 class DocumentHandler(handler.ContentHandler):
     TITLE_TAGS = [ "sub", "sup", "i", "tt", "ref" ]
     PUB_TYPE = {
