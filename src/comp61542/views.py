@@ -148,64 +148,26 @@ def showSearch():
     args = {"dataset":dataset}
     args['title'] = "Author's Statistics"
     tables = []
-    percentage=[]
-    temp1=[]
-    temp2=[]
-    temp3=[]
     author_name=""
 
     if("author_name" in request.args):
         author_name=request.args.get("author_name")
 
-    data=db.get_results_of_search_author(author_name)
+    data=db.get_results_of_search_name_author(author_name)
 
     if (isinstance(data, basestring)):
         return showAuthorStatistics(data)
     elif(len(data)>1):
 
         if(author_name!=""):
-            import difflib
-            for item in data:
-             percentage.append(difflib.SequenceMatcher(None,item,author_name).ratio())
 
-            #sortList=[x for (y,x) in sorted(zip(percentage,data))]
-
-            #sortList=[x for (y,x) in sorted(zip(percentage,data))]
-            sortList = zip(percentage, data)
-            sortList.sort()
-
-            for i in range(len(sortList)):
-                flag=0
-                str=sortList[i][1].lower().split()
-                count=0
-                for item in str:
-                    count=count+1
-                    if(item.startswith(author_name.lower())):
-                         flag=flag+count
-                if (flag==0):
-                    temp3.append(sortList[i][1])
-                elif(flag==1):
-                    temp1.append(sortList[i][1])
-                else:
-                    temp2.append(sortList[i][1])
-
-            print data
-            print temp1.reverse()
-            print temp2.reverse()
-
-            temp=[]
-            for i in temp1:
-                temp.append(i)
-            for i in temp2:
-                temp.append(i)
-            for i in temp3:
-                temp.append(i)
+            listOfAuthors=db.get_results_of_search_author(author_name,data)
 
             tables.append({
             "id":1,
             "title": "Data",
             "header":"Author",
-            "rows": temp })
+            "rows": listOfAuthors })
 
         else:
             data.sort()

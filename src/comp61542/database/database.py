@@ -63,7 +63,7 @@ class Database:
     def get_all_authors(self):
         return self.author_idx.keys()
 
-    def get_results_of_search_author(self, author_name):
+    def get_results_of_search_name_author(self, author_name):
 
         authors=[]
         for key in self.author_idx.keys():
@@ -78,6 +78,42 @@ class Database:
             return authors[0]
 
         return(authors)
+
+    def get_results_of_search_author(self,author_name,data):
+
+        listResults=[]
+        startsWithSurname=[]
+        startsWithName=[]
+        startsNever=[]
+
+        import difflib
+        for item in data:
+            fullName=item.split()
+            lastName=fullName[0].lower()
+            firstName=fullName[1].lower()
+
+            percentageLast=difflib.SequenceMatcher(None,author_name.lower(),lastName).ratio()
+            percentageFirst=difflib.SequenceMatcher(None,author_name.lower(),firstName).ratio()
+
+            if (lastName.startswith(author_name.lower())):
+                startsWithSurname.append([item,percentageLast,percentageFirst])
+            elif (firstName.startswith(author_name.lower())):
+                startsWithName.append([item,percentageLast,percentageFirst])
+            else:
+                startsNever.append([item,percentageLast,percentageFirst])
+
+        startsWithSurname.sort(key=lambda x: (-x[1], x[0]), reverse=False)
+        startsWithName.sort(key=lambda x: (-x[2], x[0]), reverse=False)
+        startsNever.sort(key=lambda x: (-x[1], x[0]), reverse=False)
+
+        for i in startsWithSurname:
+            listResults.append(i[0])
+        for i in startsWithName:
+            listResults.append(i[0])
+        for i in startsNever:
+            listResults.append(i[0])
+
+        return (listResults)
 
     def get_first_last_sole(self,pub_type):
         header = ("Author","First Author","Last Author","Sole Author")
