@@ -322,7 +322,7 @@ class Database:
                                 coauthors[a].add(a2)
                             except KeyError:
                                 coauthors[a] = set([a2])
-                    astats[a][6] = len(coauthors[a])
+        astats[a][6] = len(coauthors[a])
 
 
 
