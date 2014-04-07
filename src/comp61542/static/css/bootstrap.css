@@ -1,4 +1,4 @@
-﻿/*!
+/*!
  * Bootstrap v3.1.0 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -1463,11 +1463,11 @@ th {
 }
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
-  background-color: #666666;
+  background-color: #f9f9f9;
 }
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {
-  background-color: #cccccc;
+  background-color: #f5f5f5;
 }
 table col[class*="col-"] {
   position: static;
@@ -2367,8 +2367,8 @@ input[type="button"].btn-block {
 @font-face {
   font-family: 'Glyphicons Halflings';
 
-  src: url('../../../../../agile/fonts/glyphicons-halflings-regular.eot');
-  src: url('../../../../../agile/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../../../../../agile/fonts/glyphicons-halflings-regular.woff') format('woff'), url('../../../../../agile/fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../../../../../agile/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
 }
 .glyphicon {
   position: relative;
@@ -5483,14 +5483,18 @@ button.close {
   opacity: .5;
 }
 .carousel-control.left {
+  background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, .5) 0%), color-stop(rgba(0, 0, 0, .0001) 100%));
+  background-image:         linear-gradient(to right, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .0001) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
   background-repeat: repeat-x;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, .5) 0%, rgba(0, 0, 0, .0001) 100%);
 }
 .carousel-control.right {
   right: 0;
   left: auto;
-    background-repeat: repeat-x;
-	background-image: linear-gradient(to right, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .5) 100%);
+  background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, .0001) 0%), color-stop(rgba(0, 0, 0, .5) 100%));
+  background-image:         linear-gradient(to right, rgba(0, 0, 0, .0001) 0%, rgba(0, 0, 0, .5) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+  background-repeat: repeat-x;
 }
 .carousel-control:hover,
 .carousel-control:focus {
@@ -5825,5 +5829,3 @@ td.visible-print {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
-
-

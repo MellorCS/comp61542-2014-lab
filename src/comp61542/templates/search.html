@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block title %}{{ args.title }}{% endblock %}
 {% block content %}
-<h1>{{ args.title }}</h1>
-<h1> </h1>
+
+
+<div id="content">
+  <div id="page-wrapper">
+   		<div class="row">
+            <h1>{{ args.title }}</h1>
+                <div class="col-lg-12">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="table-responsive">
+
+
 <form name="input" action="/search" method="get" data-ajax="false" onSubmit="validateForm(this)">
 Name of Author: <input type="" name="author_name"  value="{{ args.author_name }}">
 <input type="submit" value="Submit">
@@ -31,5 +41,14 @@ Name of Author: <input type="" name="author_name"  value="{{ args.author_name }}
   </tbody>
 </table>
 <br/>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+
 {% endfor %}
 {% endblock %}
