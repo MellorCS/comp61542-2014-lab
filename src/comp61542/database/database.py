@@ -2,6 +2,7 @@ from comp61542.statistics import average
 import itertools
 import numpy as np
 from xml.sax import handler, make_parser, SAXException
+import networkx as nx
 
 PublicationType = [
     "Conference Paper", "Journal", "Book", "Book Chapter"]
@@ -261,9 +262,6 @@ class Database:
             ["Number of authors"] + [ len(a) for a in alist ] + [len(ua)] ]
         return (header, data)
 
-
-
-
     def get_average_authors_per_publication_by_author(self, av):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
@@ -282,7 +280,6 @@ class Database:
             for i in range(len(astats)) ]
         return (header, data)
 
-
     def get_publications_by_author(self):
         header = ("Author", "Number of conference papers",
             "Number of journals", "Number of books",
@@ -296,7 +293,6 @@ class Database:
         data = [ [self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header, data)
-
 
     def get_publications_and_first_last(self):
         header = ("Author","Number of conference papers",
@@ -334,7 +330,6 @@ class Database:
 
         return (header,data)
 
-
     def get_authors_who_appear_first(self):
         header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
         astats = [[0,0,0,0] for _ in range(len(self.authors))]
@@ -348,7 +343,6 @@ class Database:
             for i in range(len(astats)) ]
 
         return (header,data)
-
 
     def get_authors_who_appear_last(self):
         header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
@@ -541,6 +535,25 @@ class Database:
         data = [[self.authors[i].name] + astats[i] + [sum(astats[i])]
             for i in range(len(astats)) ]
         return (header,data)
+
+    def get_degree_of_separation_between_two_authors(self, author1, author2):
+        auth1Idx = 0
+        auth2Idx = 0
+        dos = None
+        G = nx.Graph()
+
+        try:
+            authName_totalCollab, authIdx_authConn = self.get_network_data()
+            auth1Idx = self.author_idx.__getitem__(author1)
+            auth2Idx = self.author_idx.__getitem__(author2)
+            G.add_edges_from(authIdx_authConn)
+            try:
+                dos = nx.shortest_path_length(G, auth1Idx, auth2Idx) - 1
+            except:
+                dos = "X"
+        except TypeError:
+            print TypeError.message
+        return dos
 
 
 class DocumentHandler(handler.ContentHandler):
