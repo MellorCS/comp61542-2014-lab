@@ -13,9 +13,10 @@
                             <div class="table-responsive">
 
 
-<form name="input" action="/search" method="get" data-ajax="false" onSubmit="validateForm(this)">
-Name of Author: <input id="auto" type="" name="author_name"  value="{{ args.author_name }}">
-<input type="submit" value="Submit">
+<form name="input" action="/degree" method="get" data-ajax="false" onSubmit="validateForm(this)">
+Author #1: <input type="" name="author1"  value="{{ args.author1 }}">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Author #2: <input type="" name="author2"  value="{{ args.author2 }}">
+&nbsp;&nbsp;<input type="submit" value="Submit">
 </form>
 
 
@@ -24,21 +25,19 @@ Name of Author: <input id="auto" type="" name="author_name"  value="{{ args.auth
 <h1> </h1>
 <h3>{{ table.title }}</h3>
 <h2></h2>
-<table >
-  <thead>
-    <tr>
-        <th></th>
+<table class="table table-striped table-bordered table-hover">
+ <thead>
+    <tr style=" color:white; background-color:#333333">
+      {% for column in table.header %}
+        <th>{{ column }}</th>
+      {% endfor %}
     </tr>
   </thead>
-  <tbody>
-    {% for row in table.rows %}    
-      <tr>
-
-          <td><a href="/authorStatistics/{{row}}">{{ row }}</a></td>
-
+  <tr>
+        {% for row in table.rows %}
+          <td>{{ row }}</td>
+        {% endfor %}
       </tr>
-    {% endfor %}
-  </tbody>
 </table>
 <br/>
 

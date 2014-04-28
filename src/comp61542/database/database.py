@@ -536,6 +536,13 @@ class Database:
             for i in range(len(astats)) ]
         return (header,data)
 
+    def detect_whether_the_author_exists(self,author_name):
+        a=0
+        for i in range(len(self.authors)):
+            if self.authors[i].name==author_name:
+                a=1
+        return a
+
     def get_degree_of_separation_between_two_authors(self, author1, author2):
         auth1Idx = 0
         auth2Idx = 0

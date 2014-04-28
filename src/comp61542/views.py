@@ -147,6 +147,7 @@ def showSearch():
     db = app.config['DATABASE']
     args = {"dataset":dataset}
     args['title'] = "Author's Statistics"
+    args['authorsName'] = db.get_all_authors()
     tables = []
     author_name=""
 
@@ -236,3 +237,45 @@ def showAuthorStatistics(authorname):
 
     args['tables'] = tables
     return render_template("author_statistics.html", args=args)
+
+@app.route("/degree")
+def showDegree():
+    dataset = app.config['DATASET']
+    db = app.config['DATABASE']
+    args = {"dataset":dataset}
+    table=[]
+    data=[]
+
+
+    author1=request.args.get("author1")
+    author2=request.args.get("author2")
+
+    if ((db.detect_whether_the_author_exists(author1)==1) and (db.detect_whether_the_author_exists(author2)==1)):
+
+        distance=db.get_degree_of_separation_between_two_authors(author1,author2)
+        data.append(author1)
+        data.append(author2)
+        data.append(distance)
+
+        table.append({
+        "id":1,
+        "title": "Distance of the authors",
+        "header":["Author 1","Author 2","Distance"],
+        "rows": data })
+
+
+    if (author1==None and author2==None):
+        table.append({
+        "id":1,
+        "title": "",
+        "header":"",
+        "rows": data })
+    else:
+        table.append({
+        "id":1,
+        "title": "No authors found",
+        "header":"",
+        "rows": data })
+
+    args['tables'] = table
+    return render_template('degree_of_Separation.html', args=args)
