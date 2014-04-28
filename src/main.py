@@ -24,5 +24,7 @@ if "TESTING" in os.environ:
     app.config['TESTING'] = True
 header, data = db.get_authors_who_appear_first()
 
+for p in db.authors:
+    print p.name
 app.run(host='127.0.0.1', port=9292)
 
