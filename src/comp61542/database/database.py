@@ -3,6 +3,8 @@ import itertools
 import numpy as np
 from xml.sax import handler, make_parser, SAXException
 import networkx as nx
+import matplotlib
+import matplotlib.pyplot as plt
 
 PublicationType = [
     "Conference Paper", "Journal", "Book", "Book Chapter"]
@@ -132,8 +134,6 @@ class Database:
         data = [[self.authors[i].name] + astats[i]
             for i in range(len(astats)) ]
         return (header,data)
-
-
 
     def get_coauthor_data(self, start_year, end_year, pub_type):
         coauthors = {}
@@ -524,6 +524,25 @@ class Database:
                 author_dict["coauthor"] = c[7]
         return author_dict
 
+    def coauthorsFigure(self,author_name):
+
+        author_id = self.author_idx[author_name]
+        data = self._get_collaborations(author_id,False)
+        vertices = [author_name]
+        for item in data:
+            vertices.append(self.authors[item].name)
+        print len(vertices)-1
+        coAuthorGraph = nx.Graph()
+        coAuthorGraph.add_star(vertices)
+        pos = nx.spring_layout(coAuthorGraph)
+        nx.draw(coAuthorGraph,pos)
+
+        import os
+        os.remove('comp61542/static/images/figure.png')
+        plt.savefig('comp61542/static/images/figure.png')
+        plt.close()
+        return len(vertices)-1
+
     def get_authors_who_appear_sole(self):
         header = ("Author","Conference Paper","Journal","Book","Book Chapter","Overall")
         astats = [[0,0,0,0] for _ in range(len(self.authors))]
@@ -560,6 +579,9 @@ class Database:
                 dos = "X"
         except TypeError:
             print TypeError.message
+
+
+
         return dos
 
 

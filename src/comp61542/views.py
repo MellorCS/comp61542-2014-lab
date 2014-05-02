@@ -198,16 +198,22 @@ def showAuthorStatistics(authorname):
     db = app.config['DATABASE']
     args = {"dataset":dataset, "id":"authorname"}
     args['title'] = "Statistics of " + authorname
+    args['authors_name']=authorname
     tables = []
     headers=['Conference Paper', 'Journal', 'Book', 'Book Chapter', 'Overall']
 
+    if "figure" in request.args:
+        db.coauthorsFigure(authorname)
+
     data=db.get_author_statistics(authorname)
+
+    count=db.coauthorsFigure(authorname)
 
     table1=data.get("publications")
     table2=data.get("appear_first")
     table3=data.get("appear_last")
     table4=data.get("appear_solo")
-    table5=[data.get("coauthor")]
+    table5=[count]
 
     tables.append({
         "id":1,
