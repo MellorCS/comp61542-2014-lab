@@ -35,7 +35,9 @@
 <br/>
 {% endfor %}
 
- <img class=" img-rounded img-responsive" src="{{ url_for('static', filename='images/figure.png') }}">
+ <form name="input" action="/authorStatistics/{{ args.authors_name }}" method="get" data-ajax="false">
+    <input name="figure" type="submit" value="Show Co-authors" >
+     </form>
 							</div>
 						</div>
 					</div>

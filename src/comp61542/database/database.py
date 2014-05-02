@@ -537,10 +537,11 @@ class Database:
         pos = nx.spring_layout(coAuthorGraph)
         nx.draw(coAuthorGraph,pos)
 
-        import os
-        os.remove('comp61542/static/images/figure.png')
-        plt.savefig('comp61542/static/images/figure.png')
+        plt.savefig('figure.png')
         plt.close()
+        plt.show()
+
+
         return len(vertices)-1
 
     def get_authors_who_appear_sole(self):

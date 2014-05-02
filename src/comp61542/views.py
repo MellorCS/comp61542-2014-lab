@@ -199,15 +199,18 @@ def showAuthorStatistics(authorname):
     args = {"dataset":dataset, "id":"authorname"}
     args['title'] = "Statistics of " + authorname
     args['authors_name']=authorname
+    args['authors_figure']='images/'+authorname+".png"
     tables = []
     headers=['Conference Paper', 'Journal', 'Book', 'Book Chapter', 'Overall']
 
+    count=db.coauthorsFigure(authorname)
     if "figure" in request.args:
-        db.coauthorsFigure(authorname)
+        import os
+        os.system('figure.png')
 
     data=db.get_author_statistics(authorname)
 
-    count=db.coauthorsFigure(authorname)
+
 
     table1=data.get("publications")
     table2=data.get("appear_first")
